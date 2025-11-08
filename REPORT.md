@@ -6,12 +6,15 @@ This report details the steps taken to build a complete Continuous Integration (
 
 **Description of Work:**
 
-The project was initialized from the provided ZIP file. A new, empty repository was created on GitHub. The unzipped project files were then added to a local Git repository, and an initial commit was made. This local repository was linked to the GitHub remote, and the initial project structure was pushed to the `master` branch.
-
-**Screenshot(s):**
+The project was initialized from the provided ZIP file having this structure.
 ![Project's structure](<Screenshot 2025-11-07 212523.png>)
 
-![Initialising a repository](<Screenshot 2025-11-08 140239.png>)
+ A new, empty repository was created on GitHub. The unzipped project files were then added to a local Git repository, and an initial commit was made.
+
+ ![Initialising a repository](<Screenshot 2025-11-08 140239.png>)
+
+  This local repository was linked to the GitHub remote, and the initial project structure was pushed to the `master` branch.
+
 
 ![Result](<Screenshot 2025-11-08 140250.png>)
 ## Task 2: Running Locally
@@ -64,21 +67,18 @@ To enforce code quality and style consistency, `flake8` was added to the project
 2. A `.flake8` configuration file was created at the project root to define custom rules.
 
 3. **Choices Made:** The `max-line-length` was set to `120` (from the restrictive default of 79) for better readability. The `.venv`, `models/`, and `__pycache__` directories were added to the `exclude` list to prevent linting of non-project code.
+We run `flake8` locally, which identified several styling issues.
 
-The linter was run locally with `flake8 .`, which passed with no output, indicating all styling issues were resolved.
-
-**Screenshot(s):**
 ![Running flake for the first time](<Screenshot 2025-11-08 152450.png>) 
+
+We tried after that to fix some issues manually like adding two blank lines before function definitions, removing unused imports, and adjusting line lengths. That led to fewer errors.
 ![Running flake after changes](<Screenshot 2025-11-08 153033.png>) 
+
+Then we saved all the changes and committed them to Git.
 ![git commit](<Screenshot 2025-11-08 153345.png>)
 
 ## Task 5: GitHub Actions CI Workflow
 
-**Description of Work:**
-
-A full CI workflow was created at `.github/workflows/ci.yml`.
-
-**How CI Behaves:**
 This workflow is configured to run automatically on every `push` to the `master` branch and on every `pull_request` targeting `master`. This ensures that no code can be merged unless it passes all quality checks.
 
 The workflow consists of a single `build` job that runs on an `ubuntu-latest` runner and performs these steps:
@@ -95,7 +95,8 @@ The workflow consists of a single `build` job that runs on an `ubuntu-latest` ru
 
 6. **Build Docker Image:** Builds the Docker image as a final validation step to ensure the `Dockerfile` is correct and the application is buildable.
 
-**Screenshot(s):**
+The workflow is under .github/workflows/ci.yml in the repository.
+
 ![Adding new file](<Screenshot 2025-11-08 193934.png>)
 
 
@@ -119,14 +120,21 @@ The application was containerized to ensure a consistent and reproducible runtim
 
 2. **.dockerignore:** A `.dockerignore` file was added to prevent large, unnecessary files (like `.venv`, `.git`, `models/`, `tests/`) from being copied into the build context. 
 
-3. **Build & Run:** The image was built locally (`docker build -t iris-app .`) and then run using `docker run --rm -v ${PWD}:/app iris-app` to save the output artifacts to the local directory.
+3. **Build & Run:** The image was built locally (`docker build -t iris-app .`) 
 
 ![Building an image](<Screenshot 2025-11-08 160256.png>)
+and then it was run using `docker run iris-app` to save the output artifacts to the local directory.
 
 ![Running the conterazed app](<Screenshot 2025-11-08 162326.png>)
 
 ## In the end
-After finishing all the tasks including writing this report, I pushed all the changes to the `master` branch. The GitHub Actions workflow ran automatically and successfully, confirming that the CI pipeline is fully functional.
+After finishing all the tasks including writing this report, I pushed all the changes to the `master` branch. 
+
+![Last commit](<Screenshot 2025-11-08 200435.png>)
+
+![Pushing into Github](<Screenshot 2025-11-08 200444.png>)
+
+The GitHub Actions workflow ran automatically and successfully, confirming that the CI pipeline is fully functional.
 
 ## How to Run This Project
 
@@ -140,7 +148,7 @@ There are two primary methods to run this project:
 
 3. Create a virtual environment: `python -m venv .venv`
 
-4. Activate it: `.\.venv\Scripts\activate` (Windows) or `source .venv/bin/activate` (Mac/Linux)
+4. Activate it: `.venv\Scripts\activate.bat` (Windows) or `source .venv/bin/activate` (Mac/Linux)
 
 5. Install dependencies: `pip install -r requirements.txt`
 
