@@ -134,7 +134,9 @@ After finishing all the tasks including writing this report, I pushed all the ch
 
 ![Pushing into Github](<Screenshot 2025-11-08 200444.png>)
 
-The GitHub Actions workflow ran automatically and successfully, confirming that the CI pipeline is fully functional.
+After some corrections,the GitHub Actions workflow ran automatically and successfully, confirming that the CI pipeline is fully functional.
+
+![succeessful workflow](<Screenshot 2025-11-08 210117.png>)
 
 ## How to Run This Project
 
