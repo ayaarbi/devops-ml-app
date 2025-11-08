@@ -14,4 +14,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # --- Set Default Command ---
-CMD ["python", "train.py"]
+CMD ["python", "src/train.py"]

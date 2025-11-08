@@ -3,13 +3,13 @@ name: CI/CD Pipeline
 
 # --- Triggers ---
 # This workflow will run on:
-# 1. Any 'push' event (like a git push) to the 'main' branch
-# 2. Any 'pull_request' event that targets the 'main' branch
+# 1. Any 'push' event (like a git push) to the 'master' branch
+# 2. Any 'pull_request' event that targets the 'master' branch
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "master" ]
 
 # --- Jobs ---
 # A workflow is made of one or more jobs.
