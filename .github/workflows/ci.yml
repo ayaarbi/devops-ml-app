@@ -1,52 +1,38 @@
 name: CI/CD Pipeline
 
-# Triggers the workflow on push or pull request events but only for the "master" branch
+#Triggers the workflow on the "master" branch
 on:
   push:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
-# A single job called "build-and-test"
 jobs:
   build-and-test:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Step 1: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Check out code
         uses: actions/checkout@v4
 
-      # Step 2: Sets up the specified version of Python
       - name: Set up Python 3.10
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Step 3: Install minimal dependencies for testing
-      # We install only what's needed for linting and testing (no matplotlib)
-      # to avoid system-level dependency errors on the headless runner.
       - name: Install dependencies for testing
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 pytest pytest-junitxml numpy pandas scikit-learn
+          pip install flake8 pytest numpy pandas scikit-learn
 
-      # Step 4: Lint with flake8, targeting the correct source folders
       - name: Lint with flake8
         run: flake8 src/ tests/
 
-      # Step 5: Run tests
-      # We set the PYTHONPATH to the root so that imports like "from src.data_loader"
-      # work correctly from within the tests/ directory.
       - name: Run tests and generate report
         run: |
           export PYTHONPATH="."
           python -m pytest tests/ --junitxml=test-results.xml
 
-      # Step 6: Upload the test results XML
-      # This will run even if the test step fails (if: always())
       - name: Upload test results
         uses: actions/upload-artifact@v4
         if: always()
@@ -55,24 +41,17 @@ jobs:
           path: test-results.xml
 
       # --- Docker Steps ---
-      # These steps build the full image, which *does* install all
-      # requirements.txt dependencies (like matplotlib) inside the container.
-      
-      # Step 7: Set up Docker Buildx for more build features
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Step 8: Build the Docker image
       - name: Build Docker image
         run: |
           docker build . --tag my-app:latest
 
-      # Step 9: Save the Docker image to a .tar file
       - name: Save Docker image as artifact
         run: |
           docker save my-app:latest -o iris-app-image.tar
       
-      # Step 10: Upload the Docker image .tar file as a build artifact
       - name: Upload Docker image artifact
         uses: actions/upload-artifact@v4
         with:
