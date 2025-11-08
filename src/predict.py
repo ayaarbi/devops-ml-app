@@ -3,9 +3,6 @@
 Prediction script for Iris classifier
 """
 
-import sys
-import os
-import numpy as np
 
 from model import IrisClassifier
 from data_loader import get_target_names

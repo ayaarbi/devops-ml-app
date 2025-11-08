@@ -1,0 +1,17 @@
+[flake8]
+# Set a more reasonable line length than the default 79
+max-line-length = 120
+
+# List of folders to ignore
+exclude =
+    .venv,
+    __pycache__,
+    .git,
+    models/
+
+# List of error codes to ignore
+# W503: Line break before binary operator
+# E203: Whitespace before ':' (common style conflict)
+ignore =
+    W503,
+    E203
